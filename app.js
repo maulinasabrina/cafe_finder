@@ -1,4 +1,5 @@
-import { initMap } from "./mapService.js";
+import { initMap } from "./modules/MapInitializer.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   initMap(); // load map
