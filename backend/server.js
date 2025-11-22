@@ -1,6 +1,7 @@
 const express = require("express");
 // const fetch = require("node-fetch");
 const cors = require("cors");
+const path = require("path");
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
@@ -12,12 +13,11 @@ const PORT = process.env.PORT || 3000;
 app.use(cors()); // supaya frontend bisa request
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Cafe Finder API is running");
-});
+// Serve frontend statis
+app.use(express.static(path.join(__dirname, "../frontend")));
+
 
 app.get("/api/cafes", async (req, res) => {
-//  console.log("Received /api/cafes request with query:", req.query);
    
   const { lat, lng } = req.query;
   const { q = "cafe" } = req.query;
@@ -35,7 +35,7 @@ app.get("/api/cafes", async (req, res) => {
     const data = await response.json();
     
     const results = data.local_results || [];
-    // console.log("Local results:", results);
+   
 
     const cafes = results.map(item => ({
       name: item.title,
