@@ -2,7 +2,7 @@
   "name": "cafe-finder",
   "version": "1.0.0",
   "description": "",
-   "main": "backend/server.js",
+  "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js"
   },
@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "node-fetch": "^3.3.2"
   }
