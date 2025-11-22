@@ -1,6 +1,6 @@
 let cafeLayer = L.layerGroup(); // simpan layer global
 
-export function renderCafesOnMap(map, cafes, userLat, userLng) {
+export function renderCafesOnMap(map, cafes, userLat, userLng, radius = 5000) {
   if (!map || !cafes || cafes.length === 0) return;
 
   // Hapus marker lama
@@ -10,7 +10,7 @@ export function renderCafesOnMap(map, cafes, userLat, userLng) {
   const maxDistance = 5000; // radius 5 km
   const nearbyCafes = cafes.filter(cafe => {
     const cafeLatLng = L.latLng(cafe.lat, cafe.lng);
-    return userLatLng.distanceTo(cafeLatLng) <= maxDistance;
+    return userLatLng.distanceTo(cafeLatLng) <= radius;
   });
 
   nearbyCafes.forEach(cafe => {

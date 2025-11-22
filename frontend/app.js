@@ -4,6 +4,7 @@ import { renderCafesOnMap } from "./modules/MarkerService.js";
 
 let map;
 let userLat, userLng;
+const radiusSelect = document.getElementById("radiusSelect");
 
 
 
@@ -23,11 +24,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("searchBtn").addEventListener("click", async () => {
     const keyword = document.getElementById("searchInput").value;
-    await fetchAndRenderCafes(keyword);
+    const radius = Number(radiusSelect.value); // radius dalam meter
+    await fetchAndRenderCafes(keyword, radius);
   });
 });
 
-async function fetchAndRenderCafes(keyword) {
+async function fetchAndRenderCafes(keyword, radius = 5000) {
 
   try {
     // Backend API: tambahkan query parameter 'q' untuk keyword
@@ -38,7 +40,7 @@ async function fetchAndRenderCafes(keyword) {
 
 
 
-    renderCafesOnMap(map, cafes,  userLat, userLng);
+    renderCafesOnMap(map, cafes,  userLat, userLng, radius);
   } catch (err) {
     console.error("Failed to fetch cafes:", err);
   }
