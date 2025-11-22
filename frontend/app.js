@@ -34,7 +34,7 @@ async function fetchAndRenderCafes(keyword, radius = 5000) {
 
   try {
     // Backend API: tambahkan query parameter 'q' untuk keyword
-    const url = `http://localhost:3000/api/cafes?lat=${userLat}&lng=${userLng}&q=${encodeURIComponent(keyword)}`;
+    const url = `https://cafefinder-production-c8d8.up.railway.app/api/cafes?lat=${userLat}&lng=${userLng}&q=${encodeURIComponent(keyword)}`;
     const res = await fetch(url);
     const cafes = await res.json();
     // console.log(`Fetched ${cafes.length} cafes for keyword "${keyword}"`);
