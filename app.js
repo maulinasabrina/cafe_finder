@@ -1,6 +1,6 @@
-import { initMap } from "./modules/MapInitializer.js";
-import { getUserLocation } from "./modules/UserLocation.js";
-import { renderCafesOnMap } from "./modules/MarkerService.js";
+import { initMap } from "./frontendmodules/MapInitializer.js";
+import { getUserLocation } from "./frontend/modules/UserLocation.js";
+import { renderCafesOnMap } from "./frontend/modules/MarkerService.js";
 
 let map;
 let userLat, userLng;
@@ -37,7 +37,7 @@ async function fetchAndRenderCafes(keyword, radius = 5000) {
     const url = `http://localhost:3000/api/cafes?lat=${userLat}&lng=${userLng}&q=${encodeURIComponent(keyword)}`;
     const res = await fetch(url);
     const cafes = await res.json();
-    // console.log(`Fetched ${cafes.length} cafes for keyword "${keyword}"`);
+   
 
 
 
