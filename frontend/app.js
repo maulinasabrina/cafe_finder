@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
+
 async function fetchAndRenderCafes(keyword, radius = 5000) {
 
   try {
