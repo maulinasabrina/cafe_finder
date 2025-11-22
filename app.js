@@ -1,6 +1,8 @@
 import { initMap } from "./modules/MapInitializer.js";
+import { getUserLocation } from "./modules/UserLocation.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  initMap(); // load map
+  const map =initMap(); // load map
+  getUserLocation(map);
 });
