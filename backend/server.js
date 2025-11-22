@@ -38,8 +38,8 @@ app.get("/api/cafes", async (req, res) => {
       name: item.title,
       rating: item.rating,
       address: item.address,
-      lat: item.latitude,
-      lng: item.longitude
+      lat: item.gps_coordinates.latitude,
+      lng: item.gps_coordinates.longitude
     }));
 
     res.json(cafes);
