@@ -1,25 +1,45 @@
 import { initMap } from "./modules/MapInitializer.js";
-import { renderCafesOnMap } from "./modules/MarkerService.js";
 import { getUserLocation } from "./modules/UserLocation.js";
+import { renderCafesOnMap } from "./modules/MarkerService.js";
+
+let map;
+let userLat, userLng;
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  const map =initMap(); // load map
-   navigator.geolocation.getCurrentPosition(async (position) => {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
 
-    // Center map + user marker
+document.addEventListener("DOMContentLoaded", async () => {
+  map = initMap();
+
+  navigator.geolocation.getCurrentPosition(async (position) => {
+    userLat = position.coords.latitude;
+    userLng = position.coords.longitude;
+
     getUserLocation(map);
-    
-    // Fetch cafes dari backend
-    const res = await fetch(`http://localhost:3000/api/cafes?lat=${lat}&lng=${lng}`);
-    const cafes = await res.json();
 
- 
-    // Render marker café
-    renderCafesOnMap(map, cafes);
+
+    // Initial fetch (all nearby cafes)
+    await fetchAndRenderCafes("cafes");
   });
-  // fetchCafes(-6.2, 106.8167).then(cafes => console.log(cafes));
 
+  document.getElementById("searchBtn").addEventListener("click", async () => {
+    const keyword = document.getElementById("searchInput").value;
+    await fetchAndRenderCafes(keyword);
+  });
 });
+
+async function fetchAndRenderCafes(keyword) {
+
+  try {
+    // Backend API: tambahkan query parameter 'q' untuk keyword
+    const url = `http://localhost:3000/api/cafes?lat=${userLat}&lng=${userLng}&q=${encodeURIComponent(keyword)}`;
+    const res = await fetch(url);
+    const cafes = await res.json();
+    // console.log(`Fetched ${cafes.length} cafes for keyword "${keyword}"`);
+
+
+
+    renderCafesOnMap(map, cafes,  userLat, userLng);
+  } catch (err) {
+    console.error("Failed to fetch cafes:", err);
+  }
+}
