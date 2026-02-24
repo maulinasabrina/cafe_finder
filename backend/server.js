@@ -30,11 +30,14 @@ app.get("/api/cafes", async (req, res) => {
 
   try {
     const url = `${SERP_BASE_URL}?engine=google_maps&api_key=${SERP_API_KEY}&type=search&q=${encodeURIComponent(q)}&ll=@${lat},${lng},14z`;
+    console.log(`SERP API KEY: ${SERP_API_KEY}`);
 
     const response = await fetch(url);
     const data = await response.json();
     
+  
     const results = data.local_results || [];
+    console.log(JSON.stringify(data, null, 2));
    
 
     const cafes = results.map(item => ({

@@ -7,6 +7,15 @@ let userLat, userLng;
 const radiusSelect = document.getElementById("radiusSelect");
 
 
+const loadingOverlay = document.getElementById("loadingOverlay");
+
+function showLoading() {
+  loadingOverlay.classList.remove("hidden");
+}
+
+function hideLoading() {
+  loadingOverlay.classList.add("hidden");
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   map = initMap();
@@ -33,8 +42,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function fetchAndRenderCafes(keyword, radius = 5000) {
 
   try {
+
+      showLoading();
     // Backend API: tambahkan query parameter 'q' untuk keyword
-    const url = `https://cafefinder-production-c8d8.up.railway.app/api/cafes?lat=${userLat}&lng=${userLng}&q=${encodeURIComponent(keyword)}`;
+    const url = `https://cafefinder-production-02.up.railway.app/api/cafes?lat=${userLat}&lng=${userLng}&q=${encodeURIComponent(keyword)}`;
+
     const res = await fetch(url);
     const cafes = await res.json();
     // console.log(`Fetched ${cafes.length} cafes for keyword "${keyword}"`);
@@ -44,5 +56,7 @@ async function fetchAndRenderCafes(keyword, radius = 5000) {
     renderCafesOnMap(map, cafes,  userLat, userLng, radius);
   } catch (err) {
     console.error("Failed to fetch cafes:", err);
+  }finally {
+    hideLoading();  
   }
 }

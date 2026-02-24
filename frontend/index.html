@@ -26,7 +26,12 @@
 
   <main>
     <div class="map-wrapper">
+      
       <div id="map"></div>
+      <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Finding nearby cafes...</p>
+      </div>
       <div id="controls">
         <input id="searchInput" placeholder="Search cafes (optional)" />
         <select id="radiusSelect">
